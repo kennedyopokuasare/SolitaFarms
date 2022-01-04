@@ -5,7 +5,6 @@ Creates and populates SolitaFarms databse
 
 '''
 
-import sqlite3
 from src import database
 
 DB_PATH="data/db/solitafarms.db"

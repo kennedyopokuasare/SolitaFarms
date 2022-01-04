@@ -5,8 +5,10 @@ The project uses python programming language
 All dependencies of the project has been exported to the **environment.yml** file.
 
 Install anaconda or miniconda a create the virtual environment with the command below
-````bash 
-    conda env create -f environment.yml 
+
+    ````bash 
+        conda env create -f environment.yml 
+    ````
 
 ## The database
 The databases uses SQLite, hence no installation is need. 
@@ -17,3 +19,4 @@ The databases uses SQLite, hence no installation is need.
 * run the command 
     ````bash 
         python -m setupdb
+    ````
