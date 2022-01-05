@@ -28,17 +28,23 @@ class Engine(object):
         else:
             self.db_path=DEFAULT_DB_PATH
 
-        self.dbengine=create_engine('sqlite:///'+self.db_path)
+        self.dbEngine=create_engine('sqlite:///'+self.db_path)
+
+        Session=sessionmaker(bind=self.dbEngine)
+        self.dbSession=Session()
 
 
     def get_dbEngine(self):
-        if self.dbengine is None:
-            self.dbengine=create_engine('sqlite:///'+self.db_path)
-        return self.dbengine
+        if self.dbEngine is None:
+            self.dbEngine=create_engine('sqlite:///'+self.db_path)
+        return self.dbEngine
 
     def get_dbSession(self):
-        Session=sessionmaker(bind=self.get_dbEngine())
-        self.dbSession=Session()
+        if self.dbSession is None:
+            Session=sessionmaker(bind=self.get_dbEngine())
+            self.dbSession=Session()
+            
+        return self.dbSession
 
     def remove_database(self):
         engine=self.get_dbEngine()
@@ -67,7 +73,7 @@ class Engine(object):
                     pd.read_csv(filename,index_col=None,parse_dates=["datetime"]) 
                     for filename in all_data_files
                 ],axis=0,ignore_index=True)
-                
+
         # Accept only temperature,rainfall and PH data
         metrics={
                         "temperature":SensorType(name="temperature",description="Temperature sensor"),
