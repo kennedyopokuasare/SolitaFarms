@@ -3,23 +3,32 @@ Provides Object Relational Mapping and Database Entities
 '''
 from sqlalchemy import Column,ForeignKey, Integer,DateTime, String,Numeric
 from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.ext.declarative import DeclarativeMeta
+
 BaseTable = declarative_base()
 
-class Farm(BaseTable):
+
+class JsonifiableBase(object):
+    def to_dict(self):
+        return {column.key: getattr(self, attr) for attr, column in self.__mapper__.c.items()}
+    def __iter__(self):
+        return self.to_dict().iteritems()
+
+class Farm(JsonifiableBase,BaseTable):
     __tablename__='farm'
 
     id= Column('id',Integer,primary_key=True)
     name=Column('name',String, nullable=False)
     description=Column("description",String)
 
-class SensorType(BaseTable):
+class SensorType(JsonifiableBase,BaseTable):
     __tablename__='sensor_type'
 
     id= Column('id',Integer,primary_key=True)
     name=Column('name',String, nullable=False,)
     description=Column("description",String)
 
-class SensorData(BaseTable):
+class SensorData(JsonifiableBase,BaseTable):
     __tablename__="sensor_data"
 
     id=Column('name',Integer,primary_key=True)

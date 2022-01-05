@@ -47,8 +47,10 @@ To setup and run the API, please follow the following steps
         python -m src.resources
     ````
 3. The command in step 2  will start the FLASK built in web server with the address **http://localhost:5000** , or a similar address. The actual address will be displayed in the command prompt. 
-4. The endpoints of the api are as follow:
-    * List all farms */solitafarms/farms/*
-    * 
-5. You can also use any rest client to test the API    
+4. You can now send request to the api using a web browser or a rest client like  **Restlet Client** (https://restlet.com/documentation/client/user-guide)
+5. The endpoints of the api are as follow:
+    * List all farms: `/solitafarms/farms/`
+    * List per month data for a farm `/solitafarms/farms/<farmId>/month/<monthOfYear>/`. Replace `<farmId>` and `<monthOfYear>` with a farm Id and Month of Year (between 1 and 12)
+    * List all metrics `/solitafarms/metrics/`
+    * List per metric data for a farm `/solitafarms/farms/<farmId>/metric/<metricId>/`. Replace `<farmId>` and `<metricId>` with a farm Id and metric id
 ### Running test

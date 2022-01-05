@@ -118,10 +118,10 @@ class Engine(object):
         
         
         #insert data into database
-        
-        self.get_dbSession()
-        self.dbSession.add_all(validated_dataset)
-        self.dbSession.commit()
+        with self.get_dbSession() as session:
+           session.add_all(validated_dataset)
+           session.commit()
+           print("\t Done...")
 
         
 

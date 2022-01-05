@@ -6,8 +6,11 @@ from werkzeug.exceptions import HTTPException, NotFound
 from src import database
 from src import databaseDao as dao
 
+from src.utils import CustomJSONEncoder
+
 app = Flask(__name__)
 app.debug = True
+app.json_encoder=CustomJSONEncoder
 
 app.config.update({"Engine": database.Engine()})
 
@@ -26,8 +29,9 @@ def create_response(status_code,data=None,message=None):
     if data is not None:
         envelope["data"]=data
     
-
-    return Response(json.dumps(envelope), status_code, mimetype="application/json")
+    response=jsonify(envelope)
+    response.status_code=status_code
+    return response
 
 
 @app.errorhandler(404)
@@ -54,7 +58,7 @@ def close_connection(exc):
     Check if the session is created. 
     """
 
-    if hasattr(g, "con"):
+    if hasattr(g, "session"):
         g.session.close()
 
 @app.route("/",methods=["GET"])
@@ -63,15 +67,51 @@ def home():
 
 @app.route("/solitafarms/",methods=["GET"])
 def api_home():
-    endpoints={
-        "all_farms":"/solitafarms/farms/"
-    }
-    return create_response("201",data=endpoints, message="Welcome to the API home.")
+
+    return create_response("201",message="Welcome to the Solita Farms API.")
 
 @app.route("/solitafarms/farms/",methods=["GET"])
 def get_farm_list():
-    all_farms=dao.FarmsDao(g.session).get_all_farms()
-    return create_response(200,data=all_farms)
+    with g.session as session:
+        all_farms=dao.FarmsDao(session).get_all_farms()
+        #output validation
+        if (all_farms is None) or (len(all_farms)==0) :
+            return create_response(200,data=[],message="No farms exists!")
+        return create_response(200,data=all_farms)
+
+@app.route("/solitafarms/metrics/",methods=["GET"])
+def get_metric_list():
+    with g.session as session:
+        all_metrics=dao.FarmsDao(session).get_all_metrics()
+        #output validation
+        if (all_metrics is None) or (len(all_metrics)==0) :
+            return create_response(200,data=[],message="No metrics exists!")
+        return create_response(200,data=all_metrics)
+@app.route("/solitafarms/farms/<int:farmId>/month/<int:monthOfYear>/",methods=["GET"])
+def get_farm_data_by_month(farmId:int,monthOfYear:int):
+    #input validation 
+    #First level of input validation done url formating. The url variables should be an int and and int
+    #other the resource will not be found.
+    # Checking the monthOfYear range as another level of input validation
+    if monthOfYear <1 or monthOfYear>12:
+        return create_response(403,message="Invalid url variables. monthOfYear should be from 1 to 12")
+
+    with g.session as session:
+        try:
+          results=dao.FarmsDao(session).get_farm_data_by_month(farmId, monthOfYear)
+          print(results)
+          return create_response(200,results)
+        except Exception as eror:
+           
+            return create_response(403,message="{}".format(eror))
+
+
+
+    return create_response(200)
+
+@app.route("/solitafarms/farms/<int:farmId>/metric/<int:metricId>/",methods=["GET"])
+def get_farm_data_by_metric(farmId,metricId):
+    pass
 
 #Start the application
 #DATABASE SHOULD HAVE BEEN POPULATED PREVIOUSLY
