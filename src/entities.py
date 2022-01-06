@@ -31,7 +31,7 @@ class SensorType(JsonifiableBase,BaseTable):
 class SensorData(JsonifiableBase,BaseTable):
     __tablename__="sensor_data"
 
-    id=Column('name',Integer,primary_key=True)
+    id=Column('id',Integer,primary_key=True)
     farm_id=Column('farm_id',Integer,ForeignKey('farm.id'))
     sensor_type_id=Column("sensor_type_id",Integer,ForeignKey('sensor_type.id'))
     date=Column("date",DateTime, nullable=False)
