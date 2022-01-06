@@ -96,6 +96,7 @@ class FarmsDao(object):
                                         func.max(SensorData.value).label("max"),
                                         func.min(SensorData.value).label("min"),
                                         func.avg(SensorData.value).label("average"),
+                                        func.sum(SensorData.value).label("sum"),
                                         ) \
                     .join(SensorType)\
                     .filter(SensorData.farm_id==farmId)\
@@ -107,7 +108,7 @@ class FarmsDao(object):
                     .all()
         farmData=[]
         if (results is not None) and (len(results)>0 ):
-            keys=["metric","month","year","count","max","min","average"]
+            keys=["metric","month","year","count","max","min","average","sum"]
             farmData=[{key:row[key] for key in keys} for row in results]
         
         data["metric_aggregates"]=farmData

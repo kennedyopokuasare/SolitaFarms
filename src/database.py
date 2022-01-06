@@ -6,6 +6,7 @@ from .entities import BaseTable,SensorData, SensorType, Farm
 from sqlalchemy.orm import sessionmaker
 import pandas as pd
 import glob
+import os
 
 DEFAULT_DB_PATH='data/db/solitafarms.db'
 DEFAULT_DATA_PATH="data/external/"
@@ -46,9 +47,24 @@ class Engine(object):
             
         return self.dbSession
 
-    def remove_database(self):
+    def clear_records(self):
         engine=self.get_dbEngine()
-        BaseTable.metadata.drop_all(engine)
+        with self.get_dbSession() as session:
+            session.query(SensorData).delete()
+            session.query(SensorType).delete()
+            session.query(Farm).delete()
+            session.commit()  
+            
+
+    def remove_database(self):
+        '''
+        Removes the database file from the filesystem.
+        '''
+        if os.path.exists(self.db_path):
+            # THIS REMOVES THE DATABASE STRUCTURE
+            if hasattr(self, "dbEngine"):
+                self.dbEngine.dispose()
+            os.remove(self.db_path)
     
 
     def create_tables(self):

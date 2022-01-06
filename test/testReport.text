@@ -1,0 +1,35 @@
+Started running Database tests
+Testing DatabaseTESTCase
+	Removing old database if any ...
+	Creating database ...
+	 Done...
+
+(test_farm_table_created) 
+            Check that Farms table is created and populated
+        
+	 Done...
+
+(test_metrics_types_are_valid) 
+            Check that metric types are only temperature,rainfall and pH
+        
+	 Done...
+
+(test_ph_values_are_valid) 
+            Check that pH values are between 0 - 14
+        
+	 Done...
+
+(test_sensor_data_date_is_valid) 
+            Check that Sensor data date is not None
+        
+	 Done...
+
+(test_sensor_table_created) 
+            Check that Sensor table is created and populated
+        
+	 Done...
+
+(test_temperature_values_are_valid) 
+            Check that temperature values are between -50 and 100
+        
+Testing ENDED for DatabaseTESTCase

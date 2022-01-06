@@ -40,7 +40,7 @@ A SQL dump of the database schema and data can be found at `data/db/solitafarms.
 The REST API was implemented using **FLASK microframework**(http://flask.pocoo.org/) which is a python framework.  
 
 
-## Setting up and running the API
+### Setting up and running the API
 To setup and run the API, please follow the following steps
 
 1. Ensure the project and database is setup as described in the **Setting up the project** and **The database** sections
@@ -57,4 +57,17 @@ To setup and run the API, please follow the following steps
     * List per metric data for a farm: `/solitafarms/farms/<farmId>/metric/<metricId>/`. Replace `<farmId>` and `<metricId>` with a farm Id and metric id
     * List montly aggregates of metric data for a farm: `/solitafarms/farms/<farmId>/metric/<metricId>/monthly-aggregates/`.Replace `<farmId>` and `<metricId>` with a farm Id and metric id
 
-### Running test
+## Unit Testing
+To test the database, ensure the project and database is setup as described in the **Setting up the project** and **The database** sections above
+To test the REST API, refer to **Setting up and running the API** , to setuo and run the API.
+
+To run the tests:
+
+* run the command using the command partern 
+    ```bash 
+        python -m test.<name_of_test_file_without_.py_extension>
+
+For example  of the commands to run the test cases are; 
+    * Database Test : **python -m test.db_tests**
+
+A sample test report (`testReport.text`) is located in the `test` directory 
