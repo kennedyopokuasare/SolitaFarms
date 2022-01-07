@@ -1,0 +1,29 @@
+Started running REST API tests
+Testing RestAPITestCase
+	Removing old database if any ...
+	Creating database ...
+	 Done...
+
+(test_get_farms_list) 
+        Check that GET farms list returns correct status code and data format 
+        
+	Asserting that response has status code 200
+	Asserting that response headers have application/json content type
+	Asserting that response is in JSON format
+	Asserting that response has data JSON object
+	Asserting that reponse data JSON object contains rows
+	 Done...
+
+(test_invalid_url_variable_value) 
+        Check that url variable values are validated
+        
+	Asserting that invalid url variable value returns 403 status code
+	Asserting that response has message JSON key
+	Asserting that response has message JSON value is not empty
+	 Done...
+
+(test_wrong_url) 
+        Check that wrong url returns 404 status code
+        
+	Asserting that wrong url returns 404 status code
+Testing ENDED for RestAPITestCase

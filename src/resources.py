@@ -68,7 +68,7 @@ def home():
 
 @app.route("/solitafarms/",methods=["GET"])
 def api_home():
-    return create_response("201",message="Welcome to the Solita Farms API.")
+    return create_response("200",message="Welcome to the Solita Farms API.")
 
 @app.route("/solitafarms/farms/",methods=["GET"])
 def get_farm_list():

@@ -69,5 +69,6 @@ To run the tests:
 
 For example  of the commands to run the test cases are:
 * Database Test: **python -m test.db_tests** . This will test whether the database tables are created and populated. It also tests the validity of the data, for example, metric types are only temperature,rainFall and pH, pH values are between 0 - 14. 
+* REST API Test: **python -m test.rest_api_tests** . This will test whether for example farms data is located correctly, in json format and response has Content-Type header,  wrong url returns 404, invalid url variables (example month 34) is validated and returns 403.s
 
 The test results are displayed on the command prompt. A sample test report (`testReport.text`) is located in the `test` directory 
