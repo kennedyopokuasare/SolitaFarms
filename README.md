@@ -67,7 +67,7 @@ To run the tests:
     ```bash 
         python -m test.<name_of_test_file_without_.py_extension>
 
-For example  of the commands to run the test cases are; 
-    * Database Test : **python -m test.db_tests**
+For example  of the commands to run the test cases are:
+* Database Test: **python -m test.db_tests** . This will test whether the database tables are created and populated. It also tests the validity of the data, for example, metric types are only temperature,rainFall and pH, pH values are between 0 - 14. 
 
-A sample test report (`testReport.text`) is located in the `test` directory 
+The test results are displayed on the command prompt. A sample test report (`testReport.text`) is located in the `test` directory 

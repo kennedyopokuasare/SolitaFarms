@@ -7,29 +7,40 @@ Testing DatabaseTESTCase
 (test_farm_table_created) 
             Check that Farms table is created and populated
         
+	 Asserting that Farm table is created
+	 Asserting that Farm table is populated
+	 Asserting that populated Farm table has a name column
 	 Done...
 
 (test_metrics_types_are_valid) 
-            Check that metric types are only temperature,rainfall and pH
+            Check that metric types are only temperature,rainFall and pH
         
+	 Asserting that there are on 3 metric types
+	 Asserting that metric types are only temperature,rainFall and pH
 	 Done...
 
 (test_ph_values_are_valid) 
             Check that pH values are between 0 - 14
         
+	 Asserting that pH sensor data values are between 0 - 14
 	 Done...
 
 (test_sensor_data_date_is_valid) 
             Check that Sensor data date is not None
         
+	 Asserting that Sensor data date values are not None
 	 Done...
 
 (test_sensor_table_created) 
             Check that Sensor table is created and populated
         
+	 Asserting that Sensor table is created
+	 Asserting that Sensor table is populated
+	 Asserting that populated Sensor table has a value column
 	 Done...
 
 (test_temperature_values_are_valid) 
             Check that temperature values are between -50 and 100
         
+	 Asserting that temperature sensor data values are between -50 - 100
 Testing ENDED for DatabaseTESTCase
