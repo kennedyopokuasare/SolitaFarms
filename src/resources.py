@@ -88,6 +88,15 @@ def get_metric_list():
             return create_response(200,data=[],message="No metrics exists!")
         return create_response(200,data=all_metrics)
 
+@app.route("/solitafarms/farms/<int:farmId>/",methods=["GET"])
+def get_farm_data(farmId:int):
+    with g.session as session:
+        try:
+          results=dao.FarmsDao(session).get_farm_data(farmId)
+          return create_response(200,results)
+        except Exception as eror:
+            return create_response(403,message="{}".format(eror))
+
 @app.route("/solitafarms/farms/<int:farmId>/month/<int:monthOfYear>/",methods=["GET"])
 def get_farm_data_by_month(farmId:int,monthOfYear:int):
     #input validation 

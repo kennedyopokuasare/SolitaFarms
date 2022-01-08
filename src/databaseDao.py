@@ -21,6 +21,32 @@ class FarmsDao(object):
     def get_all_metrics(self):
         return self.db_session.query(SensorType).all()
 
+    def get_farm_data(self,farmId:int):
+        data=dict()
+        farm=self.get_farm(farmId)
+        if farm is None:
+           raise Exception("No such Farm exist with id {}".format(farmId))
+
+        data["farm"]=farm
+        results=self.db_session.query(
+                                        SensorData.id,
+                                        SensorData.date,
+                                        SensorType.name.label("metric"),
+                                        SensorData.value    
+                                        ) \
+                    .join(SensorType)\
+                    .filter(SensorData.farm_id==farmId)\
+                    .all()
+
+        farmData=[]
+        if (results is not None) and (len(results)>0 ):
+            keys=["id","date","metric","value"]
+            farmData=[{key:row[key] for key in keys} for row in results]
+        
+        data["sensor_data"]=farmData
+        
+        return data
+
     def get_farm_data_by_month(self,farmId:int,monthOfYear:int):
         data=dict()
         farm=self.get_farm(farmId)
@@ -38,6 +64,7 @@ class FarmsDao(object):
                     .filter(SensorData.farm_id==farmId)\
                     .filter(extract('month',SensorData.date)==monthOfYear)\
                     .all()
+                    
         farmData=[]
         if (results is not None) and (len(results)>0 ):
             keys=["id","date","metric","value"]
