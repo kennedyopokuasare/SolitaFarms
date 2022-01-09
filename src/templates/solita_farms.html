@@ -14,7 +14,15 @@
             </select>
         </div>
     </div>
-    
+    <hr />
+    <div class="row">
+        <div class="col">
+            <div id="chartAverageContainer" style="height: 370px; width: 100%;"></div>
+        </div>
+        <div class="col">
+            <div id="chartCountContainer" style="height: 370px; width: 100%;"></div>
+        </div>
+    </div>
 </div>
 <hr />
 <table id="dataTable" class="table table-striped">
@@ -34,6 +42,89 @@
 {% block scripts %}
  <script>
      $(document).ready(function(){
+        //Load sensor data table
+        
+        function loadDataTable(table_url){
+            var table=$("#dataTable").DataTable({
+                ajax:{
+                    url:table_url,
+                    dataSrc:function(json){
+                        res=json.data
+                        flattened=[]
+                        for(i=0;i<res.sensor_data.length;i++){
+                                res.sensor_data[i]["farm"]=res.farm.name
+                                flattened.push(res.sensor_data[i])
+                        }
+                        return flattened
+                    }
+                },
+                columns:[
+                    {data:'farm'},
+                    {data:'date'},
+                    {data:'metric'},
+                    {data:'value'}
+                ]
+            });
+            return table
+        }
+        
+        //Load graphs function
+       function loadGraphs(url){
+        $.ajax({
+            url:url,
+            dataType:'json'
+        }).done(function(data,_,_){
+            values=data.data.metric_aggregates
+    
+            if(values.length==0) return
+            var averageDataPoints=[]
+            var countDataPoints=[]
+            var plot_title1= "Monthly "+values[0].metric+" Average"
+            var plot_title2= "Monthly "+values[0].metric+" Count"
+            var y_title=values[0].metric
+            for (var i = 0; i < values.length; i++) {
+                averageDataPoints.push({
+                    x: new Date(values[i].year,values[i].month-1),
+                    y: values[i].average
+                });
+                countDataPoints.push({
+                    x: new Date(values[i].year,values[i].month-1),
+                    y: values[i].count
+                });
+            }
+            averageDataPoints=averageDataPoints.sort(function(first,second){
+                return first.x-second.x
+            })
+            countDataPoints=countDataPoints.sort(function(first,second){
+                return first.x-second.x
+            })
+            var options =  {
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: plot_title1
+                },
+                axisX: {
+                    valueFormatString: "MMM YYYY",
+                },
+                axisY: {
+                    title: y_title,
+                    titleFontSize: 24
+                },
+                data: [{
+                    type: "area", 
+                    yValueFormatString: "#,###.##",
+                    dataPoints: averageDataPoints
+                 }]
+            }
+            $("#chartAverageContainer").CanvasJSChart(options);
+            options.title.text=plot_title2
+            options.data[0].dataPoints=countDataPoints
+            $("#chartCountContainer").CanvasJSChart(options);
+
+        });
+       }
+
         //Load Farms dropdown lists
         $.ajax({
             url:'/solitafarms/farms/',
@@ -46,7 +137,11 @@
                         $('<option></option>').val(item.id).html(item.name)
                     );
                }); 
+               table_url='/solitafarms/farms/'+farms[0].id+'/'
+               table=loadDataTable(table_url)
             }
+            graphs_url='/solitafarms/farms/'+farms[0].id+'/metric/1/monthly-aggregates/'
+            loadGraphs(graphs_url)
         });
 
         //Load metric dropdown lists
@@ -67,49 +162,35 @@
             }
         });
 
-        //Load sensor data table
-        table_url='/solitafarms/farms/1/'
-        var table=$("#dataTable").DataTable({
-            ajax:{
-                url:table_url,
-                dataSrc:function(json){
-                    res=json.data
-                    flattened=[]
-                    for(i=0;i<res.sensor_data.length;i++){
-                            res.sensor_data[i]["farm"]=res.farm.name
-                            flattened.push(res.sensor_data[i])
-                    }
-                    return flattened
-                }
-            },
-            columns:[
-                {data:'farm'},
-                {data:'date'},
-                {data:'metric'},
-                {data:'value'}
-            ]
-        });
-
         //when farm and metric is selected reload table
         $("#farmList").change(function(){
             if ($("#farmList").val()=="") return
             table_url='/solitafarms/farms/'+$("#farmList").val()+'/'
-            console.log(table_url)
             $("#dataTable").DataTable().ajax.reload()
+            //reload table data
             table.ajax.url(table_url).load()
             
             $("#metricList").val("").change()
+
+            //reload graphs
+            graphs_url='/solitafarms/farms/'+$("#farmList").val()+'/metric/1/monthly-aggregates/'
+            loadGraphs(graphs_url)
         });
         $("#metricList").change(function(){
             if ($("#metricList").val()=="") return;
 
             table_url='/solitafarms/farms/'+$("#farmList").val()+'/'+'metric/'+$("#metricList").val()+'/'
-            console.log(table_url)
+            //reload table data
             table.ajax.url(table_url).load()
-            
+
+            //reload graphs
+            graphs_url='/solitafarms/farms/'+$("#farmList").val()+'/metric/'+$("#metricList").val()+'/monthly-aggregates/'
+            loadGraphs(graphs_url)
         });
 
         
      });
+
+     
  </script>
 {% endblock %}

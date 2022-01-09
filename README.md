@@ -72,3 +72,27 @@ For example  of the commands to run the test cases are:
 * REST API Test: **python -m test.rest_api_tests** . This will test whether for example farms data is located correctly, in json format and response has Content-Type header,  wrong url returns 404, invalid url variables (example month 34) is validated and returns 403.s
 
 The test results are displayed on the command prompt. A sample test report (`testReportDB.text`) is located in the `test` directory 
+
+## The web application
+
+The Web application focuses on the features as specified in the [Solita Dev Academy 2022 pre-assignment](https://github.com/solita/dev-academy-2022-exercise) instruction, rather styling, or beautiful designs. 
+
+The web application's dependecies are loaded over the `internet`.  The dependencies are:
+
+* bootstrap(http://getbootstrap.com/)
+* jquery (https://jquery.com/)
+* datatables (https://datatables.net/)
+
+Running the web application will also run the REST API. Therefore, ensure the project and database is setup as described in the **Setting up the project** and **The database** sections.
+
+To setup and run the web application, please follow the following steps
+
+1. Ensure the project and database is setup as described in the **Setting up the project** and **The database** sections
+2. on the command prompt , run the command 
+    ```bash
+        python -m src.solitaFarms
+3. The command in step 2  will start the FLASK built in web server with the address **http://localhost:5000** , or a similar address. The actual address will be displayed in the command prompt.
+4. You can now open the web application in a browsers with the address **http://localhost:5000/web** 
+5. A sample screen shot of the web application can be seen in **web_app_screen.png**, or as displayed below
+
+![Web Client Screen Shot](web_app_screen.png)
