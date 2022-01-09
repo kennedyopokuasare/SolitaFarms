@@ -1,11 +1,16 @@
 {% extends "basePage.html" %}
 {% block content %}
 <div class="container">
-    <h4>Select a Farm to filter the sensor table</h2>
+    <h4>Select a Farm or Metric to filter the sensor table</h2>
     <div class="row">
         <div class="col">
             <label for="farmList" class="form-label">Farm</label>
             <select class="form-select" id="farmList" >
+            </select>
+        </div>
+        <div class="col">
+            <label for="metricList" class="form-label">Metric</label>
+            <select class="form-select" id="metricList" >
             </select>
         </div>
     </div>
@@ -34,13 +39,9 @@
             url:'/solitafarms/farms/',
             dataType:'json'
         }).done(function(data,_,_){
-            metrics=data.data
-            console.log(metrics)
-            if (metrics.length>0){
-               $("#farmList").append(
-                    $('<option></option>').val("").html("Select Farm")
-               );
-               $.each(metrics,function(index,item){
+            farms=data.data
+            if (farms.length>0){
+               $.each(farms,function(index,item){
                     $("#farmList").append(
                         $('<option></option>').val(item.id).html(item.name)
                     );
@@ -48,11 +49,27 @@
             }
         });
 
+        //Load metric dropdown lists
+        $.ajax({
+            url:'/solitafarms/metrics/',
+            dataType:'json'
+        }).done(function(data,_,_){
+            metrics=data.data
+            if (metrics.length>0){
+               $("#metricList").append(
+                    $('<option></option>').val("").html("")
+               );
+               $.each(metrics,function(index,item){
+                    $("#metricList").append(
+                        $('<option></option>').val(item.id).html(item.name)
+                    );
+               }); 
+            }
+        });
 
-        
-        
-        table_url='/solitafarms/farms/2/'
-        $("#dataTable").DataTable({
+        //Load sensor data table
+        table_url='/solitafarms/farms/1/'
+        var table=$("#dataTable").DataTable({
             ajax:{
                 url:table_url,
                 dataSrc:function(json){
@@ -72,6 +89,26 @@
                 {data:'value'}
             ]
         });
+
+        //when farm and metric is selected reload table
+        $("#farmList").change(function(){
+            if ($("#farmList").val()=="") return
+            table_url='/solitafarms/farms/'+$("#farmList").val()+'/'
+            console.log(table_url)
+            $("#dataTable").DataTable().ajax.reload()
+            table.ajax.url(table_url).load()
+            
+            $("#metricList").val("").change()
+        });
+        $("#metricList").change(function(){
+            if ($("#metricList").val()=="") return;
+
+            table_url='/solitafarms/farms/'+$("#farmList").val()+'/'+'metric/'+$("#metricList").val()+'/'
+            console.log(table_url)
+            table.ajax.url(table_url).load()
+            
+        });
+
         
      });
  </script>

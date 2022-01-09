@@ -6,11 +6,11 @@ from flask import render_template,Flask, request
 
 from src import resources
 
-#app = Flask(__name__)
-app=resources.app
+app = Flask(__name__)
 
+@app.route('/')
 @app.route('/web')
-@app.route('/web/home')
+@app.route('/home')
 def index():
     '''
     Renders the home page
