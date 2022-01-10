@@ -1,7 +1,7 @@
 {% extends "basePage.html" %}
 {% block content %}
 <div class="container">
-    <h4>Select a Farm or Metric to filter the sensor table</h2>
+    <h4>Select a Farm or Metric to filter the sensor table. The plots will also reloads</h2>
     <div class="row">
         <div class="col">
             <label for="farmList" class="form-label">Farm</label>
@@ -14,17 +14,17 @@
             </select>
         </div>
     </div>
-    <hr />
+    &nbsp; &nbsp;
     <div class="row">
         <div class="col">
-            <div id="chartAverageContainer" style="height: 370px; width: 100%;"></div>
+            <div id="chartAverageContainer" style="height: 300px; width: 100%;"></div>
         </div>
         <div class="col">
-            <div id="chartCountContainer" style="height: 370px; width: 100%;"></div>
+            <div id="chartCountContainer" style="height: 300px; width: 100%;"></div>
         </div>
     </div>
 </div>
-<hr />
+&nbsp; &nbsp;
 <table id="dataTable" class="table table-striped">
     <thead>
       <tr>

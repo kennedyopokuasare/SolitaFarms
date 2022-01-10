@@ -1,0 +1,22 @@
+Started running REST API tests
+Testing WebClientTestCase
+
+(test_data_table_loaded) 
+        Check that data table is loaded
+        
+	 Asserting that Data Table is loaded
+	 Asserting that the Data Table loads data
+	 Asserting that the Data Table has a farm which is either of these: ["Noora's farm", 'Friman Metsola collective', "Organic Ossi's Impact That Lasts plantase", 'PartialTech Research Farm']
+
+(test_dropdown_loaded) 
+        Check that drop down filters are loaded
+        
+	 Asserting that Farm List is loaded
+	 Asserting that the Farm List has a farm which is either of these: ["Noora's farm", 'Friman Metsola collective', "Organic Ossi's Impact That Lasts plantase", 'PartialTech Research Farm']
+
+(test_plots_loaded) 
+        Check that plots are loaded
+        
+	 Asserting that Average plot is loaded
+	 Asserting that Count plot is loaded
+Testing ENDED for WebClientTestCase

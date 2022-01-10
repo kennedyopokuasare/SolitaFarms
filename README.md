@@ -73,26 +73,57 @@ For example  of the commands to run the test cases are:
 
 The test results are displayed on the command prompt. A sample test report (`testReportDB.text`) is located in the `test` directory 
 
-## The web application
+## The web client
 
-The Web application focuses on the features as specified in the [Solita Dev Academy 2022 pre-assignment](https://github.com/solita/dev-academy-2022-exercise) instruction, rather styling, or beautiful designs. 
+The Web client focuses on the features as specified in the [Solita Dev Academy 2022 pre-assignment](https://github.com/solita/dev-academy-2022-exercise) instruction, rather styling, or beautiful designs. 
 
-The web application's dependecies are loaded over the `internet`.  The dependencies are:
+The web client's dependecies are loaded over the `internet`.  The dependencies are:
 
 * bootstrap(http://getbootstrap.com/)
 * jquery (https://jquery.com/)
 * datatables (https://datatables.net/)
 
-Running the web application will also run the REST API. Therefore, ensure the project and database is setup as described in the **Setting up the project** and **The database** sections.
+Running the web client will also run the REST API. Therefore, ensure the project and database is setup as described in the **Setting up the project** and **The database** sections.
 
-To setup and run the web application, please follow the following steps
+To setup and run the web client, please follow the following steps
 
 1. Ensure the project and database is setup as described in the **Setting up the project** and **The database** sections
 2. on the command prompt , run the command 
     ```bash
         python -m src.solitaFarms
 3. The command in step 2  will start the FLASK built in web server with the address **http://localhost:5000** , or a similar address. The actual address will be displayed in the command prompt.
-4. You can now open the web application in a browsers with the address **http://localhost:5000/web** 
-5. A sample screen shot of the web application can be seen in **web_app_screen.png**, or as displayed below
+4. You can now open the web client in a browsers with the address **http://localhost:5000/web** 
+5. A sample screen shot of the web client can be seen in **web_app_screen.png**, or as displayed below
 
-![Web Client Screen Shot](web_app_screen.png)
+![Web Client Screen Shot](web_client_screen.png)
+
+### Web Client testing
+You will need to install and use chrome browser to test the web client. The Web client testing has a dependency of Selenium python library and **ChromeDriver** (https://sites.google.com/chromium.org/driver/).  
+
+**Step 1**
+
+Please download the ChromeDriver which is compactible with your chrome browser version and your operating system. For example the development computer had chrome version 95 and linux 64 operating system, hence `chromedriver_linux64/chromedriver` was downloaded.
+
+**Step 2**
+The Web Client (including the REST API) should be running with the built in Flask server, in a **separate command promt** to sucessfully test the web client.  Follow the steps in setting up and running the **The web client** as described above.
+
+**Step 2**
+
+Open a **separate or second command prompt** to run the webclient test.   
+
+1. The web client test script located at `test/web_client_tests.py` has the following required settings which should be provided in the script
+
+* `CHROME_DRIVER_URL` : The url to the ChromeDriver, downloaded earlier , for example `chromedriver_linux64/chromedriver`
+* `WEB_APP_URL` the url of the web client, for example `http://localhost:5000/web/`
+
+
+2. Activate the solita environment virtual enviromnent with the command 
+````bash 
+    conda activate solita 
+````
+if the virtual environment is setup and activated correcly the prompt should show
+   `(solita)`
+
+3. run the the tests with the command `python  -m test.web_client_tests`. 
+
+The test results are displayed on the command prompt. A sample test report (`testReportWebClient.text`) is located in the `test` directory 
