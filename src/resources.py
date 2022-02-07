@@ -100,8 +100,8 @@ def get_farm_data(farmId:int):
 @app.route("/solitafarms/farms/<int:farmId>/month/<int:monthOfYear>/",methods=["GET"])
 def get_farm_data_by_month(farmId:int,monthOfYear:int):
     #input validation 
-    #First level of input validation done url formating. The url variables should be an int and and int
-    #other the resource will not be found.
+    #First level of input validation done in the url formating. The url variables should be an int and  int
+    #otherwise the resource will not be found.
     #Checking the monthOfYear range as another level of input validation
     if monthOfYear <1 or monthOfYear>12:
         return create_response(403,message="Invalid url variables. monthOfYear should be from 1 to 12")

@@ -32,7 +32,7 @@ The database also uses **SQLAlchemy** library for database access and Object Rel
         python -m setupdb
     ````
 
-At this point, the database is created at `data/db/solitafarms.db` and populated will all the CSV data at the `data/external` directory.  If the database already exists, it is deleted and recreated.
+At this point, the database is created at `data/db/solitafarms.db` and populated with all the CSV data at the `data/external` directory.  If the database already exists, it is deleted and recreated.
 
 You can find a SQL dump of the database schema and data at `data/db/solitafarms.db.sql`
 

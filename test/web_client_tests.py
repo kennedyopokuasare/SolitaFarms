@@ -33,7 +33,7 @@ class WebClientTestCase(unittest.TestCase):
 
     def setUp(self):
         '''
-        Setup chrome driver, browser and flask application
+        Setup chrome driver, and browser
         '''
 
         options=webdriver.ChromeOptions()
