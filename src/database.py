@@ -77,6 +77,7 @@ class Engine(object):
     def populate_tables(self,data_path=None):
         '''
         Read, validate and populate the database with csv data
+
         :param data_path: The path to the directory for the csv data
         '''
         if data_path is None:
@@ -97,12 +98,12 @@ class Engine(object):
                         "rainFall":SensorType(name="rainFall",description="RainFall sensor")
                         }
         raw_dataset=raw_dataset[raw_dataset.sensorType.isin(metrics.keys())]
-        
+        # random_sensor metric is removed at this point
         
         #Data may be missing from certain dates
         #validate for all missing columns as well
         raw_dataset=raw_dataset[~raw_dataset.isnull().any(axis=1)]
-    
+
         #All farms
         farms={entry.strip():Farm(name=entry.strip()) for entry in raw_dataset["location"].unique().tolist()}
 
