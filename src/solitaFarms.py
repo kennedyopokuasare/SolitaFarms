@@ -4,8 +4,8 @@ import os
 from src import resources
 from src import views
 
-api=resources.app
-webClient=views.app
+api = resources.app
+webClient = views.app
 
 application = DispatcherMiddleware(api, {
     '/web': webClient
