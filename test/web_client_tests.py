@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-CHROME_DRIVER_URL = "chromedriver_linux64/chromedriver"
+CHROME_DRIVER_URL = "chromedriver_mac64_m1/chromedriver"
 WEB_APP_URL = "http://localhost:5000/web/"
 HEADLESS_BROWSER = True
 
