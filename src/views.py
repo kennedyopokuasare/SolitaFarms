@@ -2,11 +2,12 @@ import os
 import sys
 import json
 from datetime import datetime
-from flask import render_template,Flask, request
+from flask import render_template, Flask, request
 
 from src import resources
 
 app = Flask(__name__)
+
 
 @app.route('/')
 @app.route('/web')
@@ -21,7 +22,8 @@ def index():
         year=datetime.now().year
     )
 
-#Start the application
+
+# Start the application
 if __name__ == "__main__":
-    #Debug true activates automatic code reloading and improved error messages
+    # Debug true activates automatic code reloading and improved error messages
     app.run(debug=True)
