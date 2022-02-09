@@ -58,8 +58,7 @@ To set up and run the API, please follow the following steps.
     * List montly aggregates of metric data for a farm: `/solitafarms/farms/<farmId>/metric/<metricId>/monthly-aggregates/`.Replace `<farmId>` and `<metricId>` with a farm Id and metric id
 
 ## Unit Testing
-To test the database, ensure the project and database is set up as described in the **Setting up the project** and **The database** sections above.
-To test the REST API, refer to **Setting up and running the API**  for setting up and running the API.
+To test the database, ensure the project and database is set up as described in the **Setting up the project** . The tests will automatically setup the test database and REST API 
 
 To run the tests:
 
